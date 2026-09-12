@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Meta Ray-Ban Display 用の周期表。118元素を↑↓←→で歩き、記号・名前・原子量・分類・ひとことメモをその場で確認。タップで詳細、←→で原子番号順にめくり、記号クイズで覚える。依存ライブラリなし・オフライン動作。">
+  <meta name="mrbd-web-app-capable" content="yes">
+  <title>グラス周期表 — Glass Periodic</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- メイン：周期表 -->
+    <div id="main" class="screen">
+      <div class="hud">
+        <span class="hud-title">⚛ グラス周期表</span>
+        <span class="hud-hint">←→↑↓ うごく ／ タップ くわしく</span>
+      </div>
+      <div id="grid" class="grid" aria-label="周期表"></div>
+      <div id="card" class="card">
+        <div class="card-sym-wrap">
+          <div class="card-num" id="c-num">6</div>
+          <div class="card-sym" id="c-sym">C</div>
+          <div class="card-mass" id="c-mass">12.011</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name"><span id="c-ja">炭素</span><span class="card-en" id="c-en">Carbon</span></div>
+          <div class="card-tags"><span class="tag" id="c-cat">非金属</span><span class="tag ghost" id="c-pg">第2周期・14族</span><span class="tag ghost" id="c-phase">固体</span></div>
+          <div class="card-memo" id="c-memo">ダイヤモンドも鉛筆も。生き物の骨組み</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 詳細オーバーレイ -->
+    <div id="detail" class="overlay hidden">
+      <div class="panel">
+        <div class="d-head">
+          <span class="d-num" id="d-num">6</span>
+          <span class="d-title"><span id="d-ja">炭素</span> <span class="d-en" id="d-en">Carbon</span></span>
+        </div>
+        <div class="d-main">
+          <div class="d-sym" id="d-sym">C</div>
+          <table class="d-table">
+            <tr><th>原子量</th><td id="d-mass">12.011</td></tr>
+            <tr><th>分類</th><td id="d-cat">非金属</td></tr>
+            <tr><th>周期・族</th><td id="d-pg">第2周期・14族</td></tr>
+            <tr><th>常温で</th><td id="d-phase">固体</td></tr>
+            <tr><th>電子配置</th><td id="d-shell">2, 4</td></tr>
+          </table>
+        </div>
+        <div class="d-memo" id="d-memo">ダイヤモンドも鉛筆も。生き物の骨組み</div>
+        <div class="d-hint">←→ で前後の元素をめくる</div>
+        <div class="btns" id="d-btns">
+          <button class="rail-btn" data-act="close">◀ とじる</button>
+          <button class="rail-btn ghost" data-act="quiz">❓ 記号クイズ（10問）</button>
+          <button class="rail-btn ghost" data-act="legend">🎨 色の意味</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 凡例オーバーレイ -->
+    <div id="legend" class="overlay hidden">
+      <div class="panel">
+        <div class="l-title">🎨 色の意味（分類）</div>
+        <div class="legend-list" id="legend-list"></div>
+        <div class="btns" id="l-btns">
+          <button class="rail-btn" data-act="close">◀ とじる</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- クイズ -->
+    <div id="quiz" class="screen hidden">
+      <div class="hud">
+        <span class="hud-title">❓ 記号クイズ</span>
+        <span class="hud-hint" id="q-prog">1 / 10</span>
+      </div>
+      <div class="q-card">
+        <div class="q-ask" id="q-ask">この記号の元素は？</div>
+        <div class="q-big" id="q-big">Fe</div>
+      </div>
+      <div class="btns" id="q-btns"></div>
+      <div class="q-foot" id="q-foot">↑↓ でえらんで タップ</div>
+    </div>
+
+    <!-- クイズ結果 -->
+    <div id="result" class="screen hidden">
+      <div class="hud">
+        <span class="hud-title">❓ 記号クイズ</span>
+        <span class="hud-hint">けっか</span>
+      </div>
+      <div class="r-card">
+        <div class="r-score" id="r-score">8 / 10</div>
+        <div class="r-msg" id="r-msg">すばらしい！</div>
+        <div class="r-best" id="r-best">自己ベスト 9 / 10</div>
+      </div>
+      <div class="btns" id="r-btns">
+        <button class="rail-btn" data-act="retry">🔁 もういちど</button>
+        <button class="rail-btn ghost" data-act="table">◀ 周期表にもどる</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
